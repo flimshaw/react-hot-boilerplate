@@ -53,6 +53,12 @@ class GameStore extends EventEmitter {
     return this.messages;
   }
 
+  addInventory( o ) {
+    this.getCurrent().take[ o.item ].taken = true;
+    this.gameState.inventory.push( o.item );
+    this.createMessage( { message: `You take the ${o.item}.` } );
+  }
+
 }
 
 const gameStore = new GameStore();

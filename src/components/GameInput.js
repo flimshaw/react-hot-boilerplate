@@ -31,9 +31,12 @@ export default class GameInput extends Component {
     });
   }
 
-  throwError() {
+  throwError( error ) {
+    if( error === undefined ) {
+      error = ErrorMessages[ Math.floor( Math.random() * ErrorMessages.length ) ];
+    }
     GameStore.createMessage({
-      message: ErrorMessages[ Math.floor( Math.random() * ErrorMessages.length ) ]
+      message: error
     });
   }
 
@@ -60,6 +63,11 @@ export default class GameInput extends Component {
           message: GameStore.get(0).helpMessage
         });
         return;
+      case 'inventory':
+        GameStore.createMessage({
+          message: `${GameStore.gameState.inventory.join(', ')}`
+        });
+        return;
       case 'pet':
         if( inputArray.indexOf('hudson') > -1 ) {
           GameStore.createMessage({
@@ -70,6 +78,9 @@ export default class GameInput extends Component {
             message: "You don't want to pet that..."
           });
         }
+        return;
+      case 'jmp':
+        GameStore.set( parseInt(inputArray[1]) );
         return;
     }
 
@@ -109,18 +120,26 @@ export default class GameInput extends Component {
         if( value ) {
           GameStore.set( value );
         } else {
-          this.throwError();
+          this.throwError("You can't go that way.");
         }
         break;
       case 'use':
-        GameStore.createMessage({
-          message: value
-        });
+        if( value ) {
+          GameStore.createMessage({
+            message: value
+          });
+        } else {
+          this.throwError("You can't use that.");
+        }
         break;
       case 'take':
-        GameStore.addInventory({
-          item: false
-        })
+        if( value.taken === undefined ) {
+          GameStore.addInventory({
+            item: value.item
+          })
+        } else {
+          this.throwError("I don't see that here.");
+        }
         break;
       default:
         this.throwError();
