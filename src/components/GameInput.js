@@ -16,7 +16,7 @@ export default class GameInput extends Component {
 
   componentWillMount() {
     this.state = {
-      gameData: GameStore.getCurrent()
+      currentLocation: GameStore.getCurrent()
     };
     GameStore.on('change', this.handleChange.bind(this) );
   }
@@ -27,7 +27,7 @@ export default class GameInput extends Component {
 
   handleChange() {
     this.setState({
-      gameData: GameStore.getCurrent()
+      currentLocation: GameStore.getCurrent()
     });
   }
 
@@ -85,7 +85,7 @@ export default class GameInput extends Component {
     }
 
     // list of options for this command
-    var cmdOptions = this.state.gameData[ inputArray[0] ];
+    var cmdOptions = this.state.currentLocation[ inputArray[0] ];
     if( cmdOptions === undefined ) {
       this.throwError();
       return;
@@ -98,7 +98,7 @@ export default class GameInput extends Component {
 
     var value = false;
     if( option !== undefined ) {
-      value = this.state.gameData[ inputArray[0] ][ option ];
+      value = this.state.currentLocation[ inputArray[0] ][ option ];
     }
 
     // fork based on the first command
@@ -108,7 +108,7 @@ export default class GameInput extends Component {
         if( option === undefined ) {
           if( inputArray.length === 1 ) {
             GameStore.createMessage({
-              message: this.state.gameData.look.description
+              message: this.state.currentLocation.look.description
             });
           } else {
             this.throwError("You can't see that here.");

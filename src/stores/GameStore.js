@@ -39,7 +39,25 @@ class GameStore extends EventEmitter {
   }
 
   createMessage( message ) {
-    this.messages.push( message );
+    var msg = message.message;
+    console.log(msg, typeof('msg'));
+    if( typeof(msg) === 'string' ) {
+      this.messages.push( { message: msg } );
+    } else
+    if( typeof(msg) === 'object' ) {
+      msg = msg.find( ( message ) => {
+        if( message.test === null ) {
+          return true;
+        } else {
+          return message.test(this.gameState);
+        }
+      });
+      console.log(msg);
+      this.messages.push( { message: msg.message } );
+    }
+    else {
+      return false;
+    }
     this.emit('change');
   }
 
