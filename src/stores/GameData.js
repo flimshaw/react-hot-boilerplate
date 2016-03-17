@@ -1,5 +1,14 @@
 const GameData = [
   {
+    id: 0,
+    title: "Not Really a Place",
+    helpMessage: "Try using commands like 'look', 'go', 'take', 'use' or 'pet'.",
+    startLocation: 100,
+    look: {
+      description: "You really shouldn't be here."
+    }
+  },
+  {
     id: 100,
     title: "The Scary Woods",
     go: { north: 200 },
@@ -30,7 +39,7 @@ const GameData = [
       symbol: "It's some kinda fancy letter 'P'."
     },
     use: {
-      gate: "You can't do that."
+      gate: "You can't do that, it's *very* locked."
     }
   },
   {

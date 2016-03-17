@@ -18,7 +18,7 @@ export default class GameLocation extends Component {
   }
 
   getCurrentLocation() {
-    return this.state.gameData.gameData[ GameStore.gameLookup.indexOf( this.state.gameData.gameState.currentLocation ) ].title;
+    return GameStore.getCurrent().title;
   }
 
   render() {
@@ -26,7 +26,7 @@ export default class GameLocation extends Component {
     if( this.state.gameData.messages === undefined ) return false;
 
     return (
-      <h2 className="gameLocation">{this.getCurrentLocation()}</h2>
+      <h1 className="gameLocation">{this.getCurrentLocation()}</h1>
     );
   }
 }

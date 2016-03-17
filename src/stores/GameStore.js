@@ -10,18 +10,18 @@ class GameStore extends EventEmitter {
       return item.id;
     });
     this.gameState = {
-      currentLocation: 100,
+      currentLocation: this.gameData[0].startLocation,
       inventory: []
     };
     this.messages = [
-      { message: this.gameData[0].look.description }
+      { message: this.get( this.gameState.currentLocation ).look.description }
     ];
   }
 
   set( id ) {
     this.gameState.currentLocation = id;
     this.messages.push({
-      message: this.gameData[ this.gameLookup.indexOf(id) ].look.description
+      message: this.getCurrent().look.description
     });
     this.emit('change');
   }

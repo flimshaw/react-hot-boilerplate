@@ -35,7 +35,6 @@ export default class GameConsole extends Component {
 
     return (
       <div className="gameConsole" ref={ (c) => this._container = c }>
-        
         {logs}
       </div>
     );

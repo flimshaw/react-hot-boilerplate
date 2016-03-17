@@ -1,6 +1,43 @@
 react-hot-boilerplate
 =====================
 
+## COMMAND STRUCTURE
+Basically, split a string by space characters into an array,
+the first word is your command.  Then find the first word that
+matches one of the keys on that command's options in this location.
+All data comes from stores/GameData.
+
+
+For example, here is the data for one location:
+```
+{
+  id: 200,
+  title: "In Front of Da Housss",
+  go: { woods: 100, south: 100, west: 300 },
+  look: {
+    description: "You're in front of da housss.  It's pretty normal looking, except for the fact that it's enormous and purple and has a few well-kept basketball courts.  You think you smell waffles. There is a tall gate surrounding the property.",
+    gate: "The gate has a strange symbol at the top. It looks impenetrable.",
+    hudson: "Hudson's being Hudson, and pulling his leash to the west.  Maybe he smells something...",
+    woods: "You know, they really weren't all that scary actually. You could go back there.",
+    house: "The place is a palace, decidedly regal.",
+    waffles: "There's a cartoon-like smoke trail coming from a plate on the upstairs window sill.  That must be where the waffles are cooling.",
+    basketball: "These courts are immaculate, but not disused.  Whoever lives here is pretty serious about basketball.",
+    symbol: "It's some kinda fancy letter 'P'."
+  },
+  use: {
+    gate: "You can't do that, it's *very* locked."
+  }
+}
+```
+
+And here's a command someone might type there
+```
+> look over at Hudson
+['look','over','at','hudson']
+```
+
+The command -- or verb -- is 'look', so we check the current location for a 'look' object.  Sure enough, there's one there.  Next search that object's keys for matches across all the other words in the sentence.  The first one that matches is our target or object.  Then you do something with the data stored there.  In the case of 'look', we dispatch an addMessage action to send it to the screen.  By using the first verb as a kind of key, you can easily separate behaviors for different kinds of data.
+
 The minimal dev environment to enable live-editing React components.
 
 ### Usage
