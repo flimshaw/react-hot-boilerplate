@@ -7,8 +7,8 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Ashley + Hudson Vday2016 Adventure</h1>
+      <div className="App">
+        <h1>Ashley + Hudson<br />Vday2016 Adventure</h1>
         <GameLocation />
         <GameConsole />
         <GameInput />

@@ -1,0 +1,94 @@
+$orange: #f90;
+$brightOrange: #fb3;
+$bg: #111;
+
+::-webkit-input-placeholder {
+   color: $orange;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: $orange;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: $orange;
+}
+
+:-ms-input-placeholder {
+   color: $orange;
+}
+
+body {
+  margin: 0;
+  padding: 5px;
+  font-family: monospace;
+  background: $bg;
+  color: $orange;
+  width: 100%;
+  height: 100%;
+  font-size: 1.75em;
+  box-sizing: border-box;
+}
+
+h1,h2,h3,h4,h5 {
+  padding: 0;
+  margin: 0;
+  font-size: 1em;
+  font-weight: bold;
+  color: $brightOrange;
+  text-transform: uppercase;
+}
+
+h1 {
+  text-align: center;
+  background-color: $brightOrange;
+  color: $bg;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5px 0;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+}
+
+.App {
+
+}
+
+
+.gameConsole {
+  width: 100%;
+  height: 90vh;
+  position: absolute;
+  top: 10vh;
+  left: 0;
+  overflow-y: scroll;
+  padding: 0 10px 10vh 10px;
+  box-sizing: border-box;
+}
+
+.consoleItem {
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+
+.gameInput {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 1em;
+  font-family: monospace;
+  border: none;
+  border-top: 2px solid $brightOrange;
+  background-color: $bg;
+  color: $orange;
+}
