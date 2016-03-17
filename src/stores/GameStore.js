@@ -10,15 +10,16 @@ class GameStore extends EventEmitter {
       return item.id;
     });
     this.gameState = {
-      currentItem: 100
-    }
+      currentLocation: 100,
+      inventory: []
+    };
     this.messages = [
       { message: this.gameData[0].look.description }
     ];
   }
 
   set( id ) {
-    this.gameState.currentItem = id;
+    this.gameState.currentLocation = id;
     this.messages.push({
       message: this.gameData[ this.gameLookup.indexOf(id) ].look.description
     });
@@ -29,6 +30,14 @@ class GameStore extends EventEmitter {
     return this.gameData[this.gameLookup.indexOf( id )];
   }
 
+  getAll() {
+    return {
+      gameData: this.gameData,
+      gameState: this.gameState,
+      messages: this.messages
+    };
+  }
+
   createMessage( o ) {
     this.messages.push({
       message: o.message
@@ -37,7 +46,7 @@ class GameStore extends EventEmitter {
   }
 
   getCurrent() {
-    return this.get( this.gameState.currentItem );
+    return this.get( this.gameState.currentLocation );
   }
 
   getMessages() {
@@ -46,8 +55,8 @@ class GameStore extends EventEmitter {
 
 }
 
-const gameStore = new GameStore;
+const gameStore = new GameStore();
 
-
+window.store = gameStore;
 
 export default gameStore;
