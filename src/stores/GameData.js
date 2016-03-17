@@ -27,9 +27,9 @@ const GameData = [
   {
     id: 200,
     title: "In Front of Da Housss",
-    go: { woods: 100, south: 100, west: 300 },
+    go: { woods: 100, south: 100, west: 300, garage: 400 },
     look: {
-      description: "You're in front of da housss.  It's pretty normal looking, except for the fact that it's enormous and purple and has a few well-kept basketball courts.  You think you smell waffles. There is a tall gate surrounding the property.",
+      description: "You're in front of da housss.  It's pretty normal looking, except for the fact that it's enormous and purple and has a few well-kept basketball courts .  There is a little red corvette parked in the open garage.  You think you smell waffles. There is a tall gate surrounding the property.",
       gate: "The gate has a strange symbol at the top. It looks impenetrable.",
       hudson: "Hudson's being Hudson, and pulling his leash to the west.  Maybe he smells something...",
       woods: "You know, they really weren't all that scary actually. You could go back there.",
@@ -91,9 +91,20 @@ const GameData = [
           item: 'playing cards'
         }
       }
-
     }
-  }
+  },
+  {
+    id: 400,
+    title: "An Enchanting Garage",
+    go: { east: 200, house: 200, west: 310, cave: 310 },
+    look: {
+      description: "Hudson sniffed out a cave! It's pretty small, but who knows how deep it goes. It's too dark to see much. There is a musky breeze coming from the cave.",
+      hudson: "If you didn't know better, you'd say he was proud of his find.  Also he's licking himself with a subtle kind of dignity.",
+      house: "The house is back to the east, you can't quite see it.",
+      cave: "The mouth of the cave is about 20 feet down a steepish hill, and you can only see about 10 feet inside it before it's just black.  The ground leading up to it is pretty muddy...",
+      mud: "It's brown and mud-like.",
+    }
+  },
 ];
 
 export default GameData;

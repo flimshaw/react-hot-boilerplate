@@ -38,10 +38,8 @@ class GameStore extends EventEmitter {
     };
   }
 
-  createMessage( o ) {
-    this.messages.push({
-      message: o.message
-    });
+  createMessage( message ) {
+    this.messages.push( message );
     this.emit('change');
   }
 

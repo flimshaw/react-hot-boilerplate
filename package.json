@@ -4,7 +4,9 @@
   "description": "Boilerplate for ReactJS project with hot code reloading",
   "scripts": {
     "start": "node server.js",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "build": "webpack",
+    "report": "webpack --json | webpack-bundle-size-analyzer"
   },
   "repository": {
     "type": "git",
