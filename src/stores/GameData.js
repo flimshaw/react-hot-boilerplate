@@ -1,3 +1,7 @@
+function r( arr ) {
+  return arr[ Math.floor( Math.random() * arr.length ) ];
+}
+
 const GameData = [
   {
     id: 0,
@@ -34,7 +38,7 @@ const GameData = [
   {
     id: 200,
     title: "In Front of Da Housss",
-    go: { woods: 100, south: 100, west: 300, garage: 400 },
+    go: { woods: 100, south: 100, west: 300, garage: 210 },
     look: {
       description: "You're in front of da housss.  It's pretty normal looking, except for the fact that it's enormous and purple and has a few well-kept basketball courts .  There is a little red corvette parked in the open garage.  You think you smell waffles. There is a tall gate surrounding the property.",
       gate: "The gate has a strange symbol at the top. It looks impenetrable.",
@@ -50,6 +54,16 @@ const GameData = [
         requires: function( state ) { return state.gameState.inventory.indexOf('gate_key') !== -1 },
         fail: "You can't do that, it's *very* locked."
       }
+    }
+  },
+  {
+    id: 210,
+    title: "An Enchanting Garage",
+    go: { east: 200, house: 200, west: 310, cave: 310 },
+    look: {
+      description: "The little red corvette actually doesn't hold up too well on closer inspection.  It's clean but clearly hasn't been used in years.  There's not much to report otherwise.",
+      car: "Hasn't been touched in a while.  You try the doors but they're locked.",
+      hudson: "Hudson is just kinda sittin' there.",
     }
   },
   {
@@ -69,7 +83,7 @@ const GameData = [
     title: "In the cave entrance",
     go: { in: 320, west: 320, cave: 320 },
     look: {
-      description: "You've fallen down to the cave entrance.",
+      description: "You've fallen down to the cave entrance, sliding all the way down the muddy hill behind you.  You probably can't go back the way you came.  There's a rusted out old Plymouth Valiant submerged in the mud.  Only its trunk is sticking out.",
       hudson: "Hudson sneezes and shakes off some mud.",
       cave: [
         {
@@ -95,30 +109,90 @@ const GameData = [
         item: 'rope'
       }
     },
-    // _r_ = requires this item to see, overrides defaults if item is present
-    _r_flashlight: {
-      look: {
-        description: "The flashlight doesn't help much from here, you'll have to get closer.  But you can at least see the ground in front of you.",
-        cave: "You need to go inside it to use the flashlight.",
-        trunk: "You shine the flashlight in the trunk and see some cards wedged in the corner.",
-        cards: "Cards?  Ohhhh, yeah, they're just playing cards.",
-        hudson: "He's not impressed by your flashlight."
+  },
+  {
+    id: 320,
+    title: "Inside the big room",
+    go: { north: 330, forward: 330, back: 310, south: 310 },
+    look: {
+      description: "You're pretty deep in the cave now.  As you sweep your light around it, there's an occasional flutter of black wings.  There are stalactites everywhere and sparkling quartz crystals everywhere, and small glowing firefly lights flicker here and there.  Away from your flashlight they are they only lights you see, except for a very dull glow to the north.",
+      hudson: "Hudson seems honestly a little freaked out, but more because of all the tiny creatures he could be murdering around here.",
+      ground: "The ground is moist rock with ancient looking formations jutting out here and there.  There is a pretty clear path ahead of you toward the north."
+    },
+    take: {
+      flashlight: {
+        message: "You take the flashlight.",
+        item: 'flashlight'
       },
-      take: {
-        cards: {
-          message: "You take the cards.",
-          item: 'playing cards'
-        }
+      rope: {
+        message: "You take the rope.",
+        item: 'rope'
       }
-    }
+    },
+  },
+  {
+    id: 330,
+    title: "A Totally Normal Cafeteria",
+    go: { elevator: 340, back: 310, south: 310 },
+    look: {
+      description: "You've suddenly entered what appears to be a normal 1950s style cafeteria.  There's snacks and coffee for sale, and a bored looking millenial is reading a book by the cash register.  She hasn't looked up.  There's an elevator off to the side.",
+      book: `She's reading ${r(['Snowcrash', 'Microserfs', 'A Canticle for Liebowitz', 'a Raymond Chandler novel','a rhyming dictionary', 'The Book of Mormon'])}.`,
+      hudson: "Hudson wants snacks, of course.",
+      cafeteria: "What's a perfectly normal cafeteria doing deep beneath the earth?",
+      snacks: "They've got both kinds: Regular and Cooler Ranch.",
+      millenial: `She's cute, especially for someone that works in a cave.`,
+      elevator: "Behind some revolving doors is a lobby with an elevator.  So weird."
+    },
+    take: {
+      snack: function(s) { s.gameState.inventory.push('snack'); return s; },
+      rope: function(s) { s.gameState.inventory.push('coffee'); return s; }
+    },
+  },
+  {
+    id: 340,
+    title: "Inside the Elevator",
+    go: { lobby: 400, cave: 330 },
+    look: {
+      description: "It's a totally normal elevator, except it's only got two buttons: 'Lobby' and 'Cave'.",
+      elevator: "Seen one, you've seen 'em all.'"
+    },
   },
   {
     id: 400,
-    title: "An Enchanting Garage",
-    go: { east: 200, house: 200, west: 310, cave: 310 },
+    title: "A Lobby Fit For A...",
+    go: { elevator: 340, kitchen: 410 },
     look: {
-      description: "The little red corvette actually doesn't hold up too well on closer inspection.  It's clean but clearly hasn't been used in years.  There's a ",
-      hudson: "Hudson is just kinda sittin' there.",
+      description: "You're in what must be the mansion you saw earlier. You're surrounded by glass, a grand piano on the other side of the room is being tuned by someone who looks like they've been doing it a long while. You hear kitcheny sounds and what sounds like Car Talk coming from the kitchen.  Someone must be in there.",
+      elevator: "You could get back in, but why go back down to the cave?",
+      kitchen: "You can't see much from here, but the aroma of waffles is overpowering."
+    },
+    use: {
+      piano: "I don't think the piano tuner would appreciate that.",
+    },
+  },
+  {
+    id: 410,
+    title: "In Prince's Kitchen",
+    go: { elevator: 340, kitchen: 410 },
+    look: {
+      description: "There he is.  It's Prince.  He's wearing an immaculate apron and operating two waffle makers at the same time, all the while looking as cool as heck somehow.  'Ashley,' Prince says to you. 'You look like you need a waffle.' He extends to you the most amazing waffle you've ever seen.  13 lawyers are on the other side of the room, chewing in near perfect unison.",
+      prince: "He looks amazing, but he's probably already suing me for saying so.",
+      lawyers: "Don't worry about them.",
+      waffle: `It's the ${r(['Carl Sagan', 'Ann Druyan', 'Michael Stipe', 'Thom Yorke', 'Bjork', 'Joe Biden'])} of waffles. You need it.`,
+      take: {
+        waffle: function(s) { s.gameState.currentLocation = 500; return s; }
+      }
+    },
+    use: {
+      piano: "I don't think the piano tuner would appreciate that.",
+    },
+  },
+  {
+    id: 500,
+    title: "Nirvana",
+    go: { },
+    look: {
+      description: "The flavor of the waffle just takes you away. You float into a staggering purple beyond and soon there's nothing around you but warmth and safety. You've achieved the infinite. That really was some waffle."
     }
   },
 ];
