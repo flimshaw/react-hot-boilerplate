@@ -120,17 +120,13 @@ export default class GameInput extends Component {
         // if we just said look, return a description of where we are
         if( option === undefined ) {
           if( inputArray.length === 1 ) {
-            GameStore.createMessage({
-              message: this.state.currentLocation.look.description
-            });
+            runCmd( this.state.currentLocation.look.description );
           } else {
             this.throwError("You can't see that here.");
           }
         // otherwise return the value stored at this location
         } else {
-          GameStore.createMessage({
-            message: value
-          });
+          runCmd( value );
         }
         break;
       case 'go':
