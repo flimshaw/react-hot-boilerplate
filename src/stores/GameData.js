@@ -2,9 +2,8 @@ function r( arr ) {
   return arr[ Math.floor( Math.random() * arr.length ) ];
 }
 
-const GameData = [
-  {
-    id: 0,
+const GameData = {
+  'l0': {
     title: "Not Really a Place",
     helpMessage: "Try using commands like 'look', 'go', 'take', 'use' or 'pet'.",
     startLocation: 100,
@@ -12,8 +11,7 @@ const GameData = [
       description: "You really shouldn't be here."
     }
   },
-  {
-    id: 100,
+  'l100': {
     title: "The Scary Woods",
     go: { north: 200 },
     look: {
@@ -29,14 +27,17 @@ const GameData = [
       south: "Nothing but thorny, Tolkein-esque brambles and darkness."
     },
     take: {
-      record: {
-        message: "You take the record.",
-        item: "record"
+      record: (s) => {
+        if( s.inventory.indexOf('record') == -1 ) {
+          s.inventory.push('record');
+          return "You take the record, it'll be useful somehow."
+        } else {
+          return "You already have it."
+        }
       }
     }
   },
-  {
-    id: 200,
+  'l200': {
     title: "In Front of Da Housss",
     go: { woods: 100, south: 100, west: 300, garage: 210 },
     look: {
@@ -50,14 +51,16 @@ const GameData = [
       symbol: "It's some kinda fancy letter 'P'."
     },
     use: {
-      gate: {
-        requires: function( state ) { return state.gameState.inventory.indexOf('gate_key') !== -1 },
-        fail: "You can't do that, it's *very* locked."
+      gate: (s) => {
+        if( s.inventory.indexOf('gate_key') !== -1 ) {
+          return "You can't do that, it's *very* locked.";
+        } else {
+          return "Wow, and I didn't even put a key in this game.  Impressive.";
+        }
       }
     }
   },
-  {
-    id: 210,
+  'l210': {
     title: "An Enchanting Garage",
     go: { east: 200, house: 200, west: 310, cave: 310 },
     look: {
@@ -66,8 +69,7 @@ const GameData = [
       hudson: "Hudson is just kinda sittin' there.",
     }
   },
-  {
-    id: 300,
+  'l300': {
     title: "In front of the cave",
     go: { east: 200, house: 200, west: 310, cave: 310 },
     look: {
@@ -78,44 +80,33 @@ const GameData = [
       mud: "It's brown and mud-like.",
     }
   },
-  {
-    id: 310,
+  'l310': {
     title: "In the cave entrance",
     go: { in: 320, west: 320, cave: 320 },
     look: {
       description: "You've fallen down to the cave entrance, sliding all the way down the muddy hill behind you.  You probably can't go back the way you came.  There's a rusted out old Plymouth Valiant submerged in the mud.  Only its trunk is sticking out.",
       hudson: "Hudson sneezes and shakes off some mud.",
-      cave: [
-        {
-          test: function(state) { return state.inventory.indexOf('flashlight') !== -1; },
-          message: "The cave just goes and goes."
-        },
-        {
-          test: null,
-          message: "Now that you're inside, you clap and hear the reverberations of the cave.  It must go on for miles.  If only you had a flashlight.",
+      cave: (s) => {
+        if( s.inventory.indexOf('flashlight') !== -1 ) {
+          return "The cave just goes and goes.";
+        } else {
+          return "Now that you're inside, you clap and hear the reverberations of the cave.  It must go on for miles.  If only you had a flashlight."
         }
-      ],
+      },
       hill: "There's a clear track in the hill behind you where you slid down.  It's probably to slippery to go back up without some help.",
       valiant: "It's definitely early '60s based on its vestigial fins. The trunk is the only part that's sticking out.",
       trunk: "With the gentlest suggestion the trunk pops open.  There is a flashlight and some rope in the trunk.  How convenient.",
     },
     take: {
-      flashlight: {
-        message: "You take the flashlight.",
-        item: 'flashlight'
-      },
-      rope: {
-        message: "You take the rope.",
-        item: 'rope'
-      }
+      flashlight: (s) => { s.inventory.push('flashlight'); return "You take the flashlight."; },
+      rope: (s) => { s.inventory.push('rope'); return "You take the rope." }
     },
   },
-  {
-    id: 320,
+  'l320': {
     title: "Inside the big room",
     go: { north: 330, forward: 330, back: 310, south: 310 },
     look: {
-      description: "You're pretty deep in the cave now.  As you sweep your light around it, there's an occasional flutter of black wings.  There are stalactites everywhere and sparkling quartz crystals everywhere, and small glowing firefly lights flicker here and there.  Away from your flashlight they are they only lights you see, except for a very dull glow to the north.",
+      description: "You're pretty deep in the cave now.  As you sweep your light around it, there's an occasional flutter of black wings.  There are stalactites and sparkling quartz crystals everywhere, and small glowing firefly lights flicker here and there.  Away from your flashlight they are they only lights you see, except for a very dull glow to the north.",
       hudson: "Hudson seems honestly a little freaked out, but more because of all the tiny creatures he could be murdering around here.",
       ground: "The ground is moist rock with ancient looking formations jutting out here and there.  There is a pretty clear path ahead of you toward the north."
     },
@@ -130,8 +121,7 @@ const GameData = [
       }
     },
   },
-  {
-    id: 330,
+  'l330': {
     title: "A Totally Normal Cafeteria",
     go: { elevator: 340, back: 310, south: 310 },
     look: {
@@ -144,12 +134,10 @@ const GameData = [
       elevator: "Behind some revolving doors is a lobby with an elevator.  So weird."
     },
     take: {
-      snack: function(s) { s.gameState.inventory.push('snack'); return s; },
-      rope: function(s) { s.gameState.inventory.push('coffee'); return s; }
+      snack: "You forgot your wallet."
     },
   },
-  {
-    id: 340,
+  'l340': {
     title: "Inside the Elevator",
     go: { lobby: 400, cave: 330 },
     look: {
@@ -157,12 +145,12 @@ const GameData = [
       elevator: "Seen one, you've seen 'em all.'"
     },
   },
-  {
-    id: 400,
+  'l400': {
     title: "A Lobby Fit For A...",
     go: { elevator: 340, kitchen: 410 },
     look: {
       description: "You're in what must be the mansion you saw earlier. You're surrounded by glass, a grand piano on the other side of the room is being tuned by someone who looks like they've been doing it a long while. You hear kitcheny sounds and what sounds like Car Talk coming from the kitchen.  Someone must be in there.",
+      piano: "It's currently in the middle of some very delicate looking adjustments.",
       elevator: "You could get back in, but why go back down to the cave?",
       kitchen: "You can't see much from here, but the aroma of waffles is overpowering."
     },
@@ -170,31 +158,29 @@ const GameData = [
       piano: "I don't think the piano tuner would appreciate that.",
     },
   },
-  {
-    id: 410,
+  'l410': {
     title: "In Prince's Kitchen",
     go: { elevator: 340, kitchen: 410 },
     look: {
       description: "There he is.  It's Prince.  He's wearing an immaculate apron and operating two waffle makers at the same time, all the while looking as cool as heck somehow.  'Ashley,' Prince says to you. 'You look like you need a waffle.' He extends to you the most amazing waffle you've ever seen.  13 lawyers are on the other side of the room, chewing in near perfect unison.",
       prince: "He looks amazing, but he's probably already suing me for saying so.",
       lawyers: "Don't worry about them.",
-      waffle: `It's the ${r(['Carl Sagan', 'Ann Druyan', 'Michael Stipe', 'Thom Yorke', 'Bjork', 'Joe Biden'])} of waffles. You need it.`,
-      take: {
-        waffle: function(s) { s.gameState.currentLocation = 500; return s; }
-      }
+      waffle: `It's the ${r(['Carl Sagan', 'Ann Druyan', 'Michael Stipe', 'Thom Yorke', 'Bjork', 'Joe Biden'])} of waffles. You need it.`
+    },
+    take: {
+      waffle: (s) => { s.gameState.currentLocation = 500; return s; }
     },
     use: {
       piano: "I don't think the piano tuner would appreciate that.",
     },
   },
-  {
-    id: 500,
+  'l500': {
     title: "Nirvana",
     go: { },
     look: {
       description: "The flavor of the waffle just takes you away. You float into a staggering purple beyond and soon there's nothing around you but warmth and safety. You've achieved the infinite. That really was some waffle."
     }
   },
-];
+};
 
 export default GameData;

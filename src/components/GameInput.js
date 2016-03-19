@@ -11,6 +11,19 @@ const ErrorMessages = [
   `Come again?`
 ];
 
+function runCmd( o ) {
+  if( typeof(o) === 'string' ) {
+    GameStore.createMessage({
+      message: o
+    });
+  } else
+  if( typeof(o) === 'function' ) {
+    GameStore.createMessage({
+      message: o(GameStore.gameState)
+    });
+  }
+}
+
 
 export default class GameInput extends Component {
 
@@ -60,7 +73,7 @@ export default class GameInput extends Component {
     switch( inputArray[0] ) {
       case 'help':
         GameStore.createMessage({
-          message: GameStore.get(0).helpMessage
+          message: GameStore.get('l0').helpMessage
         });
         return;
       case 'inventory':
@@ -129,18 +142,14 @@ export default class GameInput extends Component {
         break;
       case 'use':
         if( value ) {
-          GameStore.createMessage({
-            message: value
-          });
+          runCmd( value );
         } else {
           this.throwError("You can't use that.");
         }
         break;
       case 'take':
-        if( value.taken === undefined ) {
-          GameStore.addInventory({
-            item: value.item
-          })
+        if( value ) {
+          runCmd( value );
         } else {
           this.throwError("I don't see that here.");
         }

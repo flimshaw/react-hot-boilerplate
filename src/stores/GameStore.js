@@ -6,28 +6,31 @@ class GameStore extends EventEmitter {
   constructor() {
     super();
     this.gameData = GameData;
-    this.gameLookup = this.gameData.map( (item) => {
-      return item.id;
-    });
     this.gameState = {
-      currentLocation: this.gameData[0].startLocation,
+      currentLocation: this.gameData['l100'],
       inventory: []
     };
     this.messages = [
-      { message: this.get( this.gameState.currentLocation ).look.description }
+      { message: this.gameState.currentLocation.look.description }
     ];
   }
 
   set( id ) {
-    this.gameState.currentLocation = id;
+    if( typeof(id) === 'number' ) {
+      id = `l${id}`;
+    }
+    this.gameState.currentLocation = this.gameData[id];
     this.messages.push({
-      message: this.getCurrent().look.description
+      message: this.gameState.currentLocation.look.description
     });
     this.emit('change');
   }
 
   get( id ) {
-    return this.gameData[this.gameLookup.indexOf( id )];
+    if( typeof(id) === 'number' ) {
+      id = `l${id}`;
+    }
+    return this.gameData[id];
   }
 
   getAll() {
@@ -38,22 +41,15 @@ class GameStore extends EventEmitter {
     };
   }
 
-  createMessage( message ) {
-    var msg = message.message;
-    console.log(msg, typeof('msg'));
-    if( typeof(msg) === 'string' ) {
-      this.messages.push( { message: msg } );
+  createMessage( gameData ) {
+    if( typeof(gameData) === 'string' ) {
+      this.messages.push( { message: gameData } );
     } else
-    if( typeof(msg) === 'object' ) {
-      msg = msg.find( ( message ) => {
-        if( message.test === null ) {
-          return true;
-        } else {
-          return message.test(this.gameState);
-        }
-      });
-      console.log(msg);
-      this.messages.push( { message: msg.message } );
+    if( typeof(gameData) === 'function' ) {
+      this.messages.push( { message: gameData(this.gameState) } );
+    } else
+    if( typeof(gameData) === 'object') {
+      this.messages.push( gameData );
     }
     else {
       return false;
@@ -62,17 +58,11 @@ class GameStore extends EventEmitter {
   }
 
   getCurrent() {
-    return this.get( this.gameState.currentLocation );
+    return this.gameState.currentLocation;
   }
 
   getMessages() {
     return this.messages;
-  }
-
-  addInventory( o ) {
-    this.getCurrent().take[ o.item ].taken = true;
-    this.gameState.inventory.push( o.item );
-    this.createMessage( { message: `You take the ${o.item}.` } );
   }
 
 }
