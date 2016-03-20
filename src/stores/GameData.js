@@ -28,13 +28,13 @@ const GameData = {
     title: "The Scary Woods",
     go: { north: 200 },
     look: {
-      description: "You're in some pretty scary woods all right.  Hudson is with you and is frantically sniffing the ground for traces of squirrel.  There is a small house to the north.",
-      hudson: "Oh little Hudso... So smart, and yet so dumb at the same time.",
+      description: "You're in some pretty scary woods all right.  Hudson is with you and is frantically sniffing the ground for traces of squirrel.  There's some kind of mansion to the north.",
+      hudson: "Oh little Hudson... So smart, and yet so dumb at the same time.",
       woods: "They are very scary indeed.  I think it's the soundtrack that's doing it. As you look around, you realize the sound of the wind seems to be skipping a bit. And why is there a wire coming out of that tree stump...",
       stump: "Upon closer inspection, there's a turntable spinning idly next to the treestump. It's half-way through Scary Halloween Sounds vol. 3.  There's an elaborate solar panel arrangement that must keep it going day and night.",
       ground: "Just ordinary ground.",
       squirrel: "Hudson is a sucker for squirrels.  You don't really see the appeal.",
-      house: "You can just see the top of the house above the trees. It's pointy and standard-ish.",
+      house: "You can just see the top of the house above the trees. It looks pretty big.",
       west: "Not much to see over there.",
       east: "Sky to the east is getting dark. It must be late afternoon.",
       south: "Nothing but thorny, Tolkein-esque brambles and darkness."
@@ -81,7 +81,7 @@ const GameData = {
     title: "The Clifftop",
     go: { east: 200, house: 200, west: 310, cave: 310, in: 310 },
     look: {
-      description: "Hudson sniffed out a cave! It's pretty small, but who knows how deep it goes. It's too dark to see much. There is a musky breeze coming from the cave.",
+      description: "You're on a ridge overlooking a cave, there's a cool breeze coming up from it, Hudson must have sniffed it out! It's pretty small, but who knows how deep it goes. It's too dark to see much.",
       hudson: "If you didn't know better, you'd say he was proud of his find.  Also he's licking himself with a subtle kind of dignity.",
       house: "The house is back to the east, you can't quite see it.",
       cave: "The mouth of the cave is about 20 feet down a steepish hill, and you can only see about 10 feet inside it before it's just black.  The ground leading up to it is pretty muddy...",
@@ -175,9 +175,6 @@ const GameData = {
     },
     take: {
       waffle: "You can't take it.  You must go to it."
-    },
-    use: {
-      piano: "I don't think the piano tuner would appreciate that.",
     },
   },
   'l500': {
